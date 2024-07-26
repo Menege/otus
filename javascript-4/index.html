@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="text"> Summary</div>
+    </div>
+</body>
+</html>
+
+<script>
+    const getPath = () => {
+        arrValues = []
+        document.querySelectorAll('*').forEach(item => {
+            if (item.classList.length) {
+                for (const el of item.classList) {
+                    if (document.querySelectorAll(`.${el}`).length === 1) {
+                        arrValues.push(item)
+                    }
+                }
+            }
+        })
+
+        return arrValues.length ? arrValues[0] : "Не найдено"
+    }
+    console.log(getPath())
+</script>
