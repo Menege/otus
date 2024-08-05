@@ -1,31 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="text"> Summary</div>
+      <div class="text" id="primary">Summary</div>
     </div>
-</body>
+  </body>
 </html>
 
 <script>
-    const getPath = () => {
-        arrValues = []
-        document.querySelectorAll('*').forEach(item => {
-            if (item.classList.length) {
-                for (const el of item.classList) {
-                    if (document.querySelectorAll(`.${el}`).length === 1) {
-                        arrValues.push(item)
-                    }
-                }
-            }
-        })
+  const getPath = () => {
+    arrValues = [];
+    console.log(document.querySelectorAll("*"));
+    document.querySelectorAll("*").forEach((item) => {
+      if (
+        item.localName !== "html" ||
+        item.localName !== "head" ||
+        item.localName !== "meta" ||
+        item.localName !== "title" ||
+        item.localName !== "body"
+      ) {
+        for (const el of item.classList) {
+          if (document.querySelectorAll(`.${el}`).length === 1) {
+            arrValues.push(item);
+          }
+        }
+        if (item.id && document.querySelectorAll(`#${item.id}`).length === 1) {
+          arrValues.push(item);
+        }
+      }
+    });
 
-        return arrValues.length ? arrValues[0] : "Не найдено"
-    }
-    console.log(getPath())
+    return arrValues.length ? arrValues[0] : "Не найдено";
+  };
+  console.log(getPath());
 </script>
