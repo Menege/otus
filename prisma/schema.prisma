@@ -1,0 +1,30 @@
+datasource db {
+  provider = "postgresql"
+  url      = "postgres://postgres:1@localhost/leetcode"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  email     String   @unique
+  password  String
+  role      String   @default("user")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Task {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  examples    String?
+  difficulty  String
+  tags        String?
+  materials   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

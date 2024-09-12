@@ -1,0 +1,26 @@
+{
+  "name": "efremov-ruslan-otus",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/jwt": "^5.0.0",
+    "@fastify/postgres": "^5.2.2",
+    "@fastify/static": "^7.0.4",
+    "@fastify/swagger": "^8.15.0",
+    "@prisma/client": "^5.19.1",
+    "fastify": "^4.28.1",
+    "fastify-plugin": "^4.5.1"
+  },
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "mocha": "^10.0.0",
+    "nodemon": "^3.1.4"
+  }
+}
