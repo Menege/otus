@@ -20,13 +20,13 @@ interface TaskBody {
 }
 
 const getTasks = async (request: FastifyRequest, reply: FastifyReply) => {
-  const tasks = await prisma.tasks.findMany();
+  const tasks = await prisma.task.findMany();
   reply.send(tasks);
 };
 
 const getTaskById = async (request: FastifyRequest<{ Params: TaskParams }>, reply: FastifyReply) => {
   const { id } = request.params;
-  const task = await prisma.tasks.findUnique({ where: { id: parseInt(id) } });
+  const task = await prisma.task.findUnique({ where: { id: parseInt(id) } });
   if (task) {
     reply.send(task);
   } else {
@@ -36,7 +36,7 @@ const getTaskById = async (request: FastifyRequest<{ Params: TaskParams }>, repl
 
 const createTask = async (request: FastifyRequest<{ Body: TaskBody }>, reply: FastifyReply) => {
   const { title, description, examples, difficulty, tags, materials } = request.body;
-  const newTask = await prisma.tasks.create({
+  const newTask = await prisma.task.create({
     data: { title, description, examples, difficulty, tags, materials }
   });
   reply.status(201).send(newTask);
@@ -45,7 +45,7 @@ const createTask = async (request: FastifyRequest<{ Body: TaskBody }>, reply: Fa
 const updateTask = async (request: FastifyRequest<{ Params: TaskParams; Body: TaskBody }>, reply: FastifyReply) => {
   const { id } = request.params;
   const { title, description, examples, difficulty, tags, materials } = request.body;
-  const updatedTask = await prisma.tasks.update({
+  const updatedTask = await prisma.task.update({
     where: { id: parseInt(id) },
     data: { title, description, examples, difficulty, tags, materials }
   });
@@ -54,7 +54,7 @@ const updateTask = async (request: FastifyRequest<{ Params: TaskParams; Body: Ta
 
 const deleteTask = async (request: FastifyRequest<{ Params: TaskParams }>, reply: FastifyReply) => {
   const { id } = request.params;
-  await prisma.tasks.delete({ where: { id: parseInt(id) } });
+  await prisma.task.delete({ where: { id: parseInt(id) } });
   reply.status(204).send();
 };
 

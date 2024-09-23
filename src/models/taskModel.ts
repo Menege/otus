@@ -1,7 +1,6 @@
 
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, Task } from '@prisma/client'
 const prisma = new PrismaClient()// Assuming PrismaClient is correctly set up in the db file
-import { tasks } from '@prisma/client';  // Import the Task type from Prisma schema
 
 // Определение типов для параметров задачи
 interface CreateTaskData {
@@ -13,13 +12,13 @@ interface CreateTaskData {
   materials: string;
 }
 
-async function getAllTasks(): Promise<tasks[]> {
-  return prisma.tasks.findMany();
+async function getAllTasks(): Promise<Task[]> {
+  return prisma.task.findMany();
 }
 
-async function createTask(data: CreateTaskData): Promise<tasks> {
+async function createTask(data: CreateTaskData): Promise<Task> {
   const { title, description, examples, difficulty, tags, materials } = data;
-  return prisma.tasks.create({
+  return prisma.task.create({
     data: {
       title,
       description,

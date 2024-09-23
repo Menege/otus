@@ -5,14 +5,14 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 // Получение всех пользователей
  const getUsers = async (request: FastifyRequest, reply: FastifyReply) => {
-  const users = await prisma.users.findMany();
+  const users = await prisma.user.findMany();
   reply.send(users);
 };
 
 // Получение пользователя по ID
  const getUserById = async (request: FastifyRequest, reply: FastifyReply) => {
   const { id } = request.params as { id: string };
-  const user = await prisma.users.findUnique({ where: { id: parseInt(id) } });
+  const user = await prisma.user.findUnique({ where: { id: parseInt(id) } });
   if (user) {
     reply.send(user);
   } else {
@@ -28,7 +28,7 @@ const prisma = new PrismaClient()
     password: string;
     role?: string;
   };
-  const newUser = await prisma.users.create({
+  const newUser = await prisma.user.create({
     data: { username, email, password, role }
   });
   reply.status(201).send(newUser);
@@ -43,7 +43,7 @@ const prisma = new PrismaClient()
     password: string;
     role?: string;
   };
-  const updatedUser = await prisma.users.update({
+  const updatedUser = await prisma.user.update({
     where: { id: parseInt(id) },
     data: { username, email, password, role }
   });
@@ -53,7 +53,7 @@ const prisma = new PrismaClient()
 // Удаление пользователя
  const deleteUser = async (request: FastifyRequest, reply: FastifyReply) => {
   const { id } = request.params as { id: string };
-  await prisma.users.delete({ where: { id: parseInt(id) } });
+  await prisma.user.delete({ where: { id: parseInt(id) } });
   reply.status(204).send();
 };
 

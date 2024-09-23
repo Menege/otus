@@ -6,7 +6,6 @@ import authPlugin from './plugins/auth';
 import authRoutes from './routes/authRoutes';
 import taskRoutes from './routes/taskRoutes';
 import userRoutes from './routes/userRoutes';
-
 const fastify: FastifyInstance = Fastify({ logger: false });
 
 // Регистрация плагинов
@@ -42,10 +41,12 @@ fastify.register(authRoutes, { prefix: '/auth' });
 fastify.register(taskRoutes, { prefix: '/tasks' });
 fastify.register(userRoutes, { prefix: '/users' });
 
+
 const start = async () => {
   try {
     await fastify.listen({ port: 3000, host: '0.0.0.0' });
   } catch (err) {
+    console.log(err)
     fastify.log.error(err);
     process.exit(1);
   }

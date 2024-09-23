@@ -1,7 +1,6 @@
 
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, User } from '@prisma/client'
 const prisma = new PrismaClient()// Assuming PrismaClient is correctly set up in the db file
-import { users } from '@prisma/client';  // Import the User type from Prisma schema
 
 // Определение типов для параметров пользователя
 interface CreateUserData {
@@ -11,13 +10,13 @@ interface CreateUserData {
   role?: string;  // По умолчанию 'user'
 }
 
-async function getAllUsers(): Promise<users[]> {
-  return prisma.users.findMany();
+async function getAllUsers(): Promise<User[]> {
+  return prisma.user.findMany();
 }
 
-async function createUser(data: CreateUserData): Promise<users> {
+async function createUser(data: CreateUserData): Promise<User> {
   const { username, email, password, role = 'user' } = data;
-  return prisma.users.create({
+  return prisma.user.create({
     data: {
       username,
       email,
