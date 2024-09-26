@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: CI Pipeline
 
 on:
   push:
@@ -9,26 +9,49 @@ on:
       - master
 
 jobs:
-  install-build:
+  test:
     runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+    services:
+      db:
+        image: postgres:14
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: 1
+          POSTGRES_DB: leetcode
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U postgres"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
 
-    - name: Setup Node.js
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '18'
+        node-version: 18
 
     - name: Install dependencies
       run: npm install
 
-    - name: Run Prisma migrations
+    - name: Wait for PostgreSQL
+      run: |
+        until pg_isready --host=localhost --port=5432 --username=postgres; do
+          echo "Waiting for postgres..."
+          sleep 5
+        done
+
+    - name: Run Prisma Migrations
       run: npx prisma migrate deploy
+      env:
+        DATABASE_URL: postgres://postgres:1@localhost:5432/leetcode
 
-    - name: Build Docker image
-      run: docker build -t fastify-app .
-
-    - name: Run tests
+    - name: Run Tests
       run: npm run test
+      env:
+        DATABASE_URL: postgres://postgres:1@localhost:5432/leetcode
