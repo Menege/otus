@@ -28,30 +28,46 @@ jobs:
           --health-retries=5
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Wait for PostgreSQL
-      run: |
-        until pg_isready --host=localhost --port=5432 --username=postgres; do
-          echo "Waiting for postgres..."
-          sleep 5
-        done
+      - name: Wait for PostgreSQL
+        run: |
+          until pg_isready --host=localhost --port=5432 --username=postgres; do
+            echo "Waiting for postgres..."
+            sleep 5
+          done
 
-    - name: Run Prisma Migrations
-      run: npx prisma migrate deploy
-      env:
-        DATABASE_URL: postgres://postgres:1@localhost:5432/leetcode
+      - name: Run Prisma Migrations
+        run: npx prisma migrate deploy
+        env:
+          DATABASE_URL: postgres://postgres:1@localhost:5432/leetcode
 
-    - name: Run Tests
-      run: npm run test
-      env:
-        DATABASE_URL: postgres://postgres:1@localhost:5432/leetcode
+      - name: Run Tests
+        run: npm run test
+        env:
+          DATABASE_URL: postgres://postgres:1@localhost:5432/leetcode
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install SSH key
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy to server
+        run: |
+          ssh -o StrictHostKeyChecking=no j17764838@a6d0f802e7fe.hosting.myjino.ru 'cd /path/to/project && git pull origin main && npm install && npm run build && pm2 restart all'
