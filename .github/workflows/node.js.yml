@@ -70,4 +70,4 @@ jobs:
 
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no j17764838@a6d0f802e7fe.hosting.myjino.ru 'cd domains/a6d0f802e7fe.hosting.myjino.ru && git pull origin master && npm install && npm run build && pm2 restart all'
+          ssh -o StrictHostKeyChecking=no j17764838@a6d0f802e7fe.hosting.myjino.ru 'cd domains/a6d0f802e7fe.hosting.myjino.ru && git pull origin master && npm install && npm run build'
