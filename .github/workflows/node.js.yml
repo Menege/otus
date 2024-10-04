@@ -70,4 +70,4 @@ jobs:
 
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no -p 49252 7552d3ce81f9.vps.myjino.ru 'cd home/user/efremov-ruslan-otus && docker-compose up --build'
+          ssh -o StrictHostKeyChecking=no -p 49252 7552d3ce81f9.vps.myjino.ru 'cd home/user/efremov-ruslan-otus && docker-compose up -d --build'
