@@ -70,4 +70,4 @@ jobs:
 
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no j17764838@a6d0f802e7fe.hosting.myjino.ru 'cd domains/a6d0f802e7fe.hosting.myjino.ru && git pull origin master && npm install && npm run build'
+          ssh -o StrictHostKeyChecking=no -p 49252 7552d3ce81f9.vps.myjino.ru 'cd home/user/efremov-ruslan-otus && docker-compose up --build'
