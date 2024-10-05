@@ -37,9 +37,9 @@ fastify.register(swaggerUI, {
 });
 
 // Загрузка маршрутов
-fastify.register(authRoutes, { prefix: '/auth' });
-fastify.register(taskRoutes, { prefix: '/tasks' });
-fastify.register(userRoutes, { prefix: '/users' });
+fastify.register(authRoutes, { prefix: '/api/auth' });
+fastify.register(taskRoutes, { prefix: '/api/tasks' });
+fastify.register(userRoutes, { prefix: '/api/users' });
 
 
 const start = async () => {
