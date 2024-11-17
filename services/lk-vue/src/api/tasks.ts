@@ -10,8 +10,7 @@ interface Task {
   popularity: number;
 }
 
-// URL твоего API (например, локальный сервер или продакшн-адрес)
-const API_URL = import.meta.env.API_URL; // замените на настоящий API URL
+const API_URL = import.meta.env.API_URL; 
 
 // Функция для получения списка задач
 export const getTasks = async (): Promise<Task[]> => {

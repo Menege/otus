@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+
 import { UserListComponent } from './user-list/user-list.component';
 import { UserFormComponent } from './user-form/user-form.component';
+import { usersReducer } from './state/users.reducer';
 
 @NgModule({
   declarations: [
@@ -11,11 +14,9 @@ import { UserFormComponent } from './user-form/user-form.component';
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    StoreModule.forFeature('users', usersReducer),
+    EffectsModule.forFeature([]) // Для будущих эффектов
   ],
-  exports: [
-    UserListComponent,
-    UserFormComponent
-  ]
+  exports: []
 })
-export class UsersModule { }
+export class UsersModule {}

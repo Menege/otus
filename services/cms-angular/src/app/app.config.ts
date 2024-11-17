@@ -6,6 +6,9 @@ import { TagListComponent } from './tags/tag-list/tag-list.component';
 import { TagFormComponent } from './tags/tag-form/tag-form.component';
 import { UserListComponent } from './users/user-list/user-list.component';
 import { UserFormComponent } from './users/user-form/user-form.component';
+import { provideStore } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
+import { LoginComponent } from './auth/login/login.component';
 
 const routes: Routes = [
   { path: 'tasks', component: TaskListComponent },
@@ -16,11 +19,14 @@ const routes: Routes = [
   { path: 'tags/edit/:id', component: TagFormComponent },
   { path: 'users', component: UserListComponent },
   { path: 'users/edit/:id', component: UserFormComponent },
-  { path: '', redirectTo: '/tasks', pathMatch: 'full' }
+  { path: '', redirectTo: '/tasks', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
 ];
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes)
-  ]
+    provideRouter(routes),
+    provideStore(),
+    provideEffects()
+]
 };
