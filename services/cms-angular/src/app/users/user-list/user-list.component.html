@@ -8,7 +8,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let user of users">
+    <tr *ngFor="let user of users$ | async; trackBy: trackByUserId">
       <td>{{ user.name }}</td>
       <td>{{ user.role }}</td>
       <td>

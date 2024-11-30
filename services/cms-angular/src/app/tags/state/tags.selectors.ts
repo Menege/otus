@@ -17,3 +17,8 @@ export const selectTagError = createSelector(
   selectTagState,
   (state) => state.error
 );
+
+export const selectCurrentTag = createSelector(
+  selectTagState,
+  (state) => state.currentTag
+);

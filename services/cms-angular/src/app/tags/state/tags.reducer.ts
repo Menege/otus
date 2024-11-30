@@ -31,5 +31,28 @@ export const tagsReducer = createReducer(
     ...state,
     loading: false,
     error
+  })),
+  on(TagActions.loadTagById, (state) => ({
+    ...state,
+    loading: true,
+    error: null
+  })),
+  on(TagActions.loadTagByIdSuccess, (state, { tag }) => ({
+    ...state,
+    currentTag: tag,
+    loading: false
+  })),
+
+  // Сохранение тега
+  on(TagActions.saveTag, (state) => ({
+    ...state,
+    loading: true,
+    error: null
+  })),
+  on(TagActions.saveTagSuccess, (state, { tag }) => ({
+    ...state,
+    tags: [...state.tags.filter(t => t.id !== tag.id), tag], // Обновляем или добавляем тег
+    currentTag: null,
+    loading: false
   }))
 );
