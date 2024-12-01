@@ -47,30 +47,30 @@ const TaskForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label>Title</label>
+      <label>Название</label>
       <input type="text" name="title" value={task.title} onChange={handleChange} required />
 
-      <label>Description</label>
+      <label>Описание</label>
       <textarea name="description" value={task.description} onChange={handleChange} required />
 
-      <label>Examples</label>
+      <label>Примеры</label>
       <textarea name="examples" value={task.examples} onChange={handleChange} required />
 
-      <label>Difficulty</label>
+      <label>Сложность</label>
       <select name="difficulty" value={task.difficulty} onChange={handleChange}>
-        <option value="easy">Easy</option>
-        <option value="medium">Medium</option>
-        <option value="hard">Hard</option>
+        <option value="easy">Простая</option>
+        <option value="medium">Средняя</option>
+        <option value="hard">Сложная</option>
       </select>
 
-      <label>Tags</label>
+      <label>Теги</label>
       <select name="tags" value={task.tags} onChange={handleTagsChange} multiple>
-        <option value="algorithms">Algorithms</option>
-        <option value="data-structures">Data Structures</option>
-        <option value="math">Math</option>
+        <option value="алгоритмы">Алгоритмы</option>
+        <option value="структуры данных">Структуры данных</option>
+        <option value="математика">Математика</option>
       </select>
 
-      <button type="submit">{id ? 'Update Task' : 'Create Task'}</button>
+      <button type="submit">{id ? 'Обновить задачу' : 'Создать задачу'}</button>
     </form>
   );
 };
