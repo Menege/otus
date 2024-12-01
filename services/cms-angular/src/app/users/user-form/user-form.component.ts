@@ -7,15 +7,19 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./user-form.component.scss']
 })
 export class UserFormComponent implements OnInit {
-  userForm: FormGroup;
+  userForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.initializeForm();
+  }
+
+  private initializeForm(): void {
     this.userForm = this.fb.group({
       role: ['', Validators.required]
     });
   }
-
-  ngOnInit(): void {}
 
   onSubmit(): void {
     if (this.userForm.valid) {

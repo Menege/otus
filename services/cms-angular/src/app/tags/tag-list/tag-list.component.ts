@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TagService } from '../../services/tag.service';
+import { Observable } from 'rxjs';
+import { Tag } from '../../models/tag.model';
 
 @Component({
   selector: 'app-tag-list',
@@ -7,7 +9,7 @@ import { TagService } from '../../services/tag.service';
   styleUrls: ['./tag-list.component.scss']
 })
 export class TagListComponent implements OnInit {
-  tags: any[] = [];
+  tags$!: Observable<Tag[]>; // Теперь это Observable
 
   constructor(private tagService: TagService) {}
 
@@ -16,14 +18,10 @@ export class TagListComponent implements OnInit {
   }
 
   fetchTags(): void {
-    this.tagService.getTags().subscribe((data) => {
-      this.tags = data;
-    });
+    this.tags$ = this.tagService.getTags();
   }
 
   deleteTag(id: string): void {
-    this.tagService.deleteTag(id).subscribe(() => {
-      this.tags = this.tags.filter(tag => tag.id !== id);
-    });
+    this.tagService.deleteTag(id);
   }
 }

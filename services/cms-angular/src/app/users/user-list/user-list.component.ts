@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../services/user.service';
+import { UserService } from '../../services/user.service'; // Ваш сервис для получения пользователей
+import { Observable } from 'rxjs'; // Импорт Observable
 
 @Component({
   selector: 'app-user-list',
@@ -7,17 +8,16 @@ import { UserService } from '../../services/user.service';
   styleUrls: ['./user-list.component.scss']
 })
 export class UserListComponent implements OnInit {
-  users: any[] = [];
+  users$!: Observable<any[]>; // Observable для списка пользователей
 
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.fetchUsers();
+    // Получаем Observable из сервиса
+    this.users$ = this.userService.getUsers(); // возвращаем Observable
   }
 
-  fetchUsers(): void {
-    this.userService.getUsers().subscribe((data) => {
-      this.users = data;
-    });
+  trackByUserId(index: number, user: any): number {
+    return user.id; // Возвращаем уникальный идентификатор для каждого пользователя
   }
 }

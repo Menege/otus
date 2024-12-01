@@ -1,5 +1,5 @@
 <h2>Список тегов</h2>
-<table class="table">
+<table class="table" *ngIf="tags$ | async as tags; else loading">
   <thead>
     <tr>
       <th>Название тега</th>
@@ -16,3 +16,6 @@
     </tr>
   </tbody>
 </table>
+<ng-template #loading>
+  <p>Загрузка тегов...</p>
+</ng-template>

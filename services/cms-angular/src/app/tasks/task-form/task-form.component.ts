@@ -6,10 +6,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-task-form',
   templateUrl: './task-form.component.html',
-  styleUrls: ['./task-form.component.scss']
+  styleUrls: ['./task-form.component.scss'],
 })
 export class TaskFormComponent implements OnInit {
-  taskForm: FormGroup;
+  taskForm!: FormGroup;
   taskId: string | null = null;
 
   constructor(
@@ -17,24 +17,32 @@ export class TaskFormComponent implements OnInit {
     private taskService: TaskService,
     private route: ActivatedRoute,
     private router: Router
-  ) {
+  ) {}
+
+  ngOnInit(): void {
+    this.initializeForm();
+
+    this.taskId = this.route.snapshot.paramMap.get('id');
+    if (this.taskId) {
+      this.loadTaskData();
+    }
+  }
+
+  private initializeForm(): void {
     this.taskForm = this.fb.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
       inputExample: ['', Validators.required],
       outputExample: ['', Validators.required],
       difficulty: ['', Validators.required],
-      tags: [[]]
+      tags: [[]],
     });
   }
 
-  ngOnInit(): void {
-    this.taskId = this.route.snapshot.paramMap.get('id');
-    if (this.taskId) {
-      this.taskService.getTaskById(this.taskId).subscribe(task => {
-        this.taskForm.patchValue(task);
-      });
-    }
+  private loadTaskData(): void {
+    this.taskService.getTaskById(this.taskId!).subscribe((task) => {
+      this.taskForm.patchValue(task);
+    });
   }
 
   onSubmit(): void {
