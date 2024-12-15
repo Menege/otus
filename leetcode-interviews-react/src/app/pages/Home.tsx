@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getTasks } from '../api/tasksApi';
 import { Task } from '../types/task';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 const Home: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -42,11 +42,11 @@ const Home: React.FC = () => {
       <ul>
         {filteredTasks.map((task) => (
           <li key={task.id}>
-            <Link to={`/tasks/${task.id}`}>{task.title}</Link>
+            <Link href={`/tasks/${task.id}`}>{task.title}</Link>
           </li>
         ))}
       </ul>
-      <Link to="/tasks/new">Добавить новую задачу</Link>
+      <Link href="/tasks/new">Добавить новую задачу</Link>
     </div>
   );
 };

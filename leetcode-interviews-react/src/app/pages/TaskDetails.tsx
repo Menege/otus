@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import TaskList from '../components/TaskList';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState, AppDispatch, setTasks, fetchData } from '../store';
+import { RootState, AppDispatch, setTasks, fetchData } from '../store.ts';
 
 const TaskDetails: React.FC = () => {
   const { id } = useParams();
