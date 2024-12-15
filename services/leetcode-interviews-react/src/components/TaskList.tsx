@@ -1,18 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { getTasks } from '../api/tasksApi';
 import { Task } from '../types/task';
 
-const TaskList: React.FC = () => {
-  const [tasks, setTasks] = useState<Task[]>([]);
+interface TaskListProps {
+  tasks: Task[];
+}
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      const data = await getTasks();
-      setTasks(data);
-    };
-    fetchTasks();
-  }, []);
-
+const TaskList: React.FC<TaskListProps> = ({tasks}) => {
   return (
     <ul>
       {tasks.map((task) => (

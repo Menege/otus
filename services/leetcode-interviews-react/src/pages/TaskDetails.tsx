@@ -1,30 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getTaskById } from '../api/tasksApi';
-import { Task } from '../types/task';
+import TaskList from '../components/TaskList';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch, setTasks, fetchData } from '../store';
 
 const TaskDetails: React.FC = () => {
   const { id } = useParams();
-  const [task, setTask] = useState<Task | null>(null);
+  const { tasks } = useSelector((state: RootState)  => state.tasks);
+  const dispatch = useDispatch<AppDispatch>()
 
+  const fetchTask = async () => {
+    const res: any = dispatch(fetchData(id))
+    setTasks(res)
+  };
   useEffect(() => {
-    const fetchTask = async () => {
-      if (id) {
-        const data = await getTaskById(id);
-        setTask(data);
-      }
-    };
     fetchTask();
   }, [id]);
 
-  if (!task) return <p>Loading...</p>;
+  if (!tasks) return <p>Loading...</p>;
 
   return (
     <div>
-      <h1>{task.title}</h1>
-      <p>{task.description}</p>
-      <pre>{task.examples}</pre>
-      <p>Difficulty: {task.difficulty}</p>
+      <TaskList tasks={tasks}></TaskList>
     </div>
   );
 };
