@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, defaultIfEmpty, Observable, throwError } from 'rxjs';
 import { Tag } from '../models/tag.model';
 
 @Injectable({
@@ -19,19 +19,27 @@ export class TagService {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
 
-  // Получение тега по ID
   getTagById(id: string): Observable<Tag> {
-    return this.http.get<Tag>(`${this.apiUrl}/${id}`);
+    return this.http.get<Tag>(`${this.apiUrl}/${id}`).pipe(
+      defaultIfEmpty({ id: '', name: 'Тег не найден' })
+    );
   }
 
-  // Сохранение (создание/редактирование) тега
   saveTag(id: string | undefined, data: Tag): Observable<Tag> {
-    if (id) {
-      // Редактирование
-      return this.http.put<Tag>(`${this.apiUrl}/${id}`, data);
+    if (!id) {
+      return this.http.post<Tag>(`${this.apiUrl}`, data).pipe(
+        catchError((error) => {
+          console.error('Ошибка при создании тега:', error);
+          return throwError(() => new Error('Не удалось создать тег'));
+        })
+      );
     } else {
-      // Создание
-      return this.http.post<Tag>(this.apiUrl, data);
+      return this.http.put<Tag>(`${this.apiUrl}/${id}`, data).pipe(
+        catchError((error) => {
+          console.error(`Ошибка при обновлении тега с id ${id}:`, error);
+          return throwError(() => new Error('Не удалось обновить тег'));
+        })
+      );
     }
   }
 }
